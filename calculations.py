@@ -42,6 +42,32 @@ def calculate_angle_by_derivative(points_x, points_y, t):
     return angle
 
 
+def calculate_angle_by_derivative_coons(points_x, points_y, t):
+    angle = 0
+    k = 1/2
+
+    t2 = t * t
+
+    part1x = points_x[2] - points_x[0]
+    part2x = 2 * t * (points_x[2] - 2 * points_x[1] + points_x[0])
+    part3x = t2 * (points_x[3] - 3 * points_x[2] + 3 * points_x[1] - points_x[0])
+    u = k * (part1x + part2x + part3x)
+
+    part1y = points_y[2] - points_y[0]
+    part2y = 2 * t * (points_y[2] - 2 * points_y[1] + points_y[0])
+    part3y = t2 * (points_y[3] - 3 * points_y[2] + 3 * points_y[1] - points_y[0])
+    v = k * (part1y + part2y + part3y)
+
+    angle = math.atan2(v, u) * 180 / math.pi
+
+    if angle < 0:
+        angle = math.fabs(angle)
+    else:
+        angle = 360 - angle
+
+    return angle
+
+
 def calculate_speed_by_derivative(points, t):
     der = 0
 
@@ -68,6 +94,19 @@ def calculate_speed_by_derivative(points, t):
         der = (points[0] * w0) + (points[1] * w1) + (points[2] * w2) + (points[3] * w3)
     else:
         print("Error in calculating speed by derivative")
+
+    return der
+
+
+def calculate_speed_by_derivative_coons(points, t):
+    der = 0
+
+    c0 = -3 * math.pow((1 - t), 2)
+    c1 = 9 * math.pow(t, 2) - 12 * t
+    c2 = -9 * math.pow(t, 2) + 6 * t + 3
+    c3 = 3 * math.pow(t, 2)
+
+    der = (points[0] * c0) + (points[1] * c1) + (points[2] * c2) + (points[3] * c3)
 
     return der
 
