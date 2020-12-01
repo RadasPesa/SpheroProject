@@ -7,11 +7,13 @@ def coons_derivative(p0, p1, p2, p3, d_step):
     speeds = []
     angles = []
 
+    k = 1 / 6
+
     for t in np.arange(d_step, 1 + d_step, d_step):
         angle = calculate_angle_by_derivative_coons((p0[0], p1[0], p2[0], p3[0]), (p0[1], p1[1], p2[1], p3[1]), t)
         x_der = calculate_speed_by_derivative_coons((p0[0], p1[0], p2[0], p3[0]), t)
         y_der = calculate_speed_by_derivative_coons((p0[1], p1[1], p2[1], p3[1]), t)
-        speed = np.sqrt((np.power(x_der, 2)) + (np.power(y_der, 2)))
+        speed = k * (np.sqrt((np.power(x_der, 2)) + (np.power(y_der, 2))))
 
         angles.append(angle)
         speeds.append(speed)
