@@ -1,9 +1,16 @@
 import time
+import drive_line
 
+from enum import Enum
 from time import sleep
 from pysphero.core import Sphero
 from bezier import *
 from coons import *
+
+
+class Type(Enum):
+    DERIVATIVE = 1
+    DISCRETIZATION = 2
 
 
 def main():
@@ -12,9 +19,13 @@ def main():
 
 
 def control_robot(mac_address):
+
+    p_start = (0, 0)
+    p_end = (10, 0)
+
     with Sphero(mac_address=mac_address) as sphero:
         wake_robot(sphero)
-        drive_curve(sphero)
+        drive_line.drive_cubic_bezier(sphero, p_start, p_end, Type.DERIVATIVE)
         sleep(2)
         sleep_robot(sphero)
 
@@ -25,23 +36,6 @@ def wake_robot(sphero: Sphero):
 
 def sleep_robot(sphero: Sphero):
     sphero.power.enter_soft_sleep()
-
-
-def drive_curve(sphero: Sphero):
-    d_step = 0.1
-
-    p0 = (0, 0)
-    p1 = (0, 0)
-    p2 = (10, 0)
-    p3 = (10, 0)
-
-    angles, speeds = cubic_bezier_derivative(p0, p1, p2, p3, d_step)
-
-    start_time = time.time()
-    for i in range(0, len(angles)):
-        time.sleep(0.1 - ((time.time() - start_time) % 0.1))
-        print("Angle: " + str(angles[i]))
-        print("Speed: " + str(speeds[i]))
 
 
 if __name__ == "__main__":
