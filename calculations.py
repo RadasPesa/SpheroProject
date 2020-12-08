@@ -36,8 +36,8 @@ def calculate_angle_by_derivative(points_x, points_y, t):
 
     if angle < 0:
         angle = math.fabs(angle)
-    else:
-        angle = 360 - angle
+    elif angle == 360:
+        angle = 0
 
     return angle
 
@@ -62,8 +62,8 @@ def calculate_angle_by_derivative_coons(points_x, points_y, t):
 
     if angle < 0:
         angle = math.fabs(angle)
-    else:
-        angle = 360 - angle
+    elif angle == 360:
+        angle = 0
 
     return angle
 
@@ -116,8 +116,8 @@ def calculate_angle_by_discretization(prev_point, act_point):
 
     if angle < 0:
         angle = math.fabs(angle)
-    else:
-        angle = 360 - angle
+    elif angle == 360:
+        angle = 0
 
     return angle
 

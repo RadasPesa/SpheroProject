@@ -26,7 +26,6 @@ def control_robot(mac_address):
     with Sphero(mac_address=mac_address) as sphero:
         wake_robot(sphero)
         drive_line.drive_cubic_bezier(sphero, p_start, p_end, Type.DERIVATIVE)
-        sleep(2)
         sleep_robot(sphero)
 
 
