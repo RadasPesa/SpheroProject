@@ -64,4 +64,13 @@ def coons_discretization(p0, p1, p2, p3, d_step):
 
         previous_point = actual_point
 
+    # Duplication of the last point for reaching zero speed at the end
+    # CAUTION: Could be giving bad results when not drawing line
+    # (connecting/connection points in standard curves must be treated)
+    # possible solutions = delete every 11th value, calculate average value of previous and oncoming point
+    angle = calculate_angle_by_discretization(previous_point, previous_point)
+    speed = calculate_speed_by_discretization(previous_point, previous_point) / d_step
+    angles.append(angle)
+    speeds.append(speed)
+
     return angles, speeds

@@ -21,20 +21,12 @@ def main():
 def control_robot(mac_address):
 
     p_start = (0, 0)
-    p_end = (10, 0)
+    p_end = (0, 50)
 
     with Sphero(mac_address=mac_address) as sphero:
-        wake_robot(sphero)
+        sphero.power.wake()
         drive_line.drive_cubic_bezier(sphero, p_start, p_end, Type.DERIVATIVE)
-        sleep_robot(sphero)
-
-
-def wake_robot(sphero: Sphero):
-    sphero.power.wake()
-
-
-def sleep_robot(sphero: Sphero):
-    sphero.power.enter_soft_sleep()
+        sphero.power.enter_soft_sleep()
 
 
 if __name__ == "__main__":
